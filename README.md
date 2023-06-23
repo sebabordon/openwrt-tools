@@ -18,4 +18,5 @@ Add a new scheduled tasks on Openwrt, with the line
 Wait one minute for the client generation script to run and the clients will appear on the home page. 
 I could not get the HTML page to run the script so I resorted to the scheduled task. 
 
-This was made possible by some scripts I've found on the Openwrt Forums, so the credit is not fully mine. I will try to address the names as soon as I can find them.
+This was made possible by some scripts I've found on the Openwrt Forums, so the credit is not fully mine. I will try to address the names as soon as I can find them. 
+I'm sure it can be made simpler in a single html page but I lack the knowledge to do it
