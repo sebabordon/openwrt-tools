@@ -1,0 +1,22 @@
+<%-
+  require "string"
+  require "luci.sys"
+  local test = luci.sys.call("/etc/openvpn/client-status.sh")
+  
+  local client_output = luci.sys.exec("cat /tmp/openvpn_clients.htm")
+ -%>
+
+
+
+<div class="cbi-section">
+        <h3><%:Active OpenVPN Clients%></h3>
+        <div class="table">
+                <div class="tr table-titles">
+                        <div class="th"><%:Address%></div>
+<div class="th"><%:Common Name%></div>
+                        <div class="th"><%:Real Address%></div>
+                        <div class="th"><%:Connected Since%></div>
+                </div>
+                <%=client_output%>
+        </div>
+</div>
