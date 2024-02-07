@@ -1,14 +1,14 @@
 STATUS_FILE=/tmp/openvpn_clients.htm
-#VPN_CLIENTS="$(cat /var/run/openvpn.*.status | sed -n '/OpenVPN CLIENT LIST/,/ROUTING TABLE/p' | tail -n+4 | sed "s/ROUTING TABLE//g";)"
-VPN_CLIENTS="$(cat /var/run/openvpn.*.status | sed -n '/ROUTING TABLE/,/GLOBAL STATS/p' | tail -n+3 | sed "s/GLOBAL STATS//g";)"
-IFS=',' read -r -a array <<< "$VPN_CLIENTS"
-
-echo "<div class=\"tr\">" > $STATUS_FILE
-
-for client in "${array[@]}"
-do
-    echo "<div class=\"td\">" >> $STATUS_FILE 
-    echo "$client" >> $STATUS_FILE
+VPN_CLIENTS="$(cat /var/run/openvpn.*.status | sed -n '/ROUTING TABLE/,/GLOBAL STATS/p' | tail -n+3 | sed "s/GLOBAL STATS//g")"
+readarray -t vpn_status <<< $VPN_CLIENTS
+echo > $STATUS_FILE
+for i in "${!vpn_status[@]}"; do
+    echo "<div class=\"tr\">" >>$STATUS_FILE
+    IFS=',' read -r -a client_string <<< ${vpn_status[i]}
+    for client in "${client_string[@]}"; do
+        echo "<div class=\"td\">" >>$STATUS_FILE
+        echo "$client" >> $STATUS_FILE
+        echo "</div>" >> $STATUS_FILE
+    done
     echo "</div>" >> $STATUS_FILE
 done
-echo "</div>" >> $STATUS_FILE
